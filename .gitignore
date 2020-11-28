@@ -3,3 +3,6 @@
 *.wim
 *.o
 *.dev
+.git
+.vs
+.sln

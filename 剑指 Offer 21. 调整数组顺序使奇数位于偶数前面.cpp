@@ -2,24 +2,18 @@
 class Solution {
 public:
     vector<int> exchange(vector<int>& nums) {
-        if(nums.size() == 0) return nums;
+        if(nums.size() == 0 || nums.size() == 1) return nums;
         int size = nums.size() - 1;
         int i = 0;
-        int j = size - 1;
+        int j = size;
 
-        while(i <= size / 2 || j >= size / 2) {
-            while(i <= size / 2 && !(nums[i] % 2)) i++;
-            while(j >= size / 2 && nums[j] % 2) j--;
-            if(nums[i] % 2 == 0) {
+        while(i <= j) {
+            while(i <= j && nums[i] % 2 != 0) i++;
+            while(i <= j && nums[j] % 2 == 0) j--;
+            if(i <= j)
                 swap(nums[i], nums[j]);
-            }
+            i++; j--;
         }
         return nums;
     }
 };
-
-int main() {
-	vector<int> vec{1,2,3,4};
-	Solution s;
-	s.exchange(vec);
-}
