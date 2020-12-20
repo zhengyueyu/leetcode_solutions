@@ -1,4 +1,4 @@
-class Solution {
+ class Solution {
 public:
     bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
         if(pushed.size() != popped.size()) return false;
