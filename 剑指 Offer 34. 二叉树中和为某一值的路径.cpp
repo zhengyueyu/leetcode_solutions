@@ -12,18 +12,26 @@ public:
     vector<vector<int>> pathSum(TreeNode* root, int sum) {
         vector<vector<int>> res;
         vector<int> path;
-        helper(root, res, path, sum, 0);
+        dfs(root, sum, 0, res, path);
         return res;
     }
 
-    void helper(TreeNode* root, vector<vector<int>>& res, vector<int>& path, const int& sum, int totalsum) {
-        if(root == nullptr) return;
+    void dfs(TreeNode* root, int sum, int totalsum, vector<vector<int>>& res, vector<int> path) {
+        if(root == nullptr) {
+            return;
+        }
         totalsum += root->val;
         path.push_back(root->val);
-        if(totalsum == sum && root->left == nullptr && root->right == nullptr) res.push_back(path);
-        helper(root->left, res, path, sum, totalsum);
-        helper(root->right, res, path, sum, totalsum);
-        totalsum -= root->val;
+
+        //需要找到从根节点到叶子节点的路径，所以不能有任一个子节点非空
+        if(totalsum == sum && !root->left && !root->right) {
+            res.push_back(path);
+        }
+        dfs(root->left, sum, totalsum, res, path);
+        dfs(root->right, sum, totalsum, res, path);
         path.pop_back();
+        totalsum -= root->val;
     }
+
+
 };

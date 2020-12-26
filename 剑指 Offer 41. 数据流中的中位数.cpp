@@ -6,28 +6,32 @@ public:
     }
     
     void addNum(int num) {
-        if(minH.size() == maxH.size()) {
-            maxH.push(num);
-            minH.push(maxH.top());
-            maxH.pop();    
+        //这里要注意 不可以只判断heap大小来判断元素应该装入哪个heap
+        //因为装入某一个size小的堆后，如果发现这个num其实应该装入另外一个堆
+        //就要进行弹出，这时两个堆size的差距又加1，就找不出中位数了
+        if(maxheap.size() == minheap.size()) {
+            maxheap.push(num);
+            minheap.push(maxheap.top());
+            maxheap.pop();
         }
         else {
-            minH.push(num);
-            maxH.push(minH.top());
-            minH.pop();
+            minheap.push(num);
+            maxheap.push(minheap.top());
+            minheap.pop();
         }
     }
     
     double findMedian() {
-        if(minH.size() == 0 && maxH.size() == 0) return 0;
-        if(minH.size() > maxH.size()) return minH.top();
-        if(minH.size() < maxH.size()) return maxH.top();
-        return (maxH.top() + minH.top()) / 2.0f;
+        if(minheap.empty()) return 0;
+        if(maxheap.size() - minheap.size() == 0) {
+            return (maxheap.top() + minheap.top()) / 2.0f;
+        }
+        else return minheap.top();
     }
 
 private:
-    priority_queue<int, vector<int>, less<int>> maxH;
-    priority_queue<int, vector<int>, greater<int>> minH;
+    priority_queue<int, vector<int>, greater<int>> minheap;
+    priority_queue<int, vector<int>, less<int>> maxheap;
 };
 
 /**

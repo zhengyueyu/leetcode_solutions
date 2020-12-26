@@ -2,9 +2,8 @@ class Solution {
 public:
 	bool isSubStructure(TreeNode* A, TreeNode* B) {
 		if (A == nullptr || B == nullptr) return false;
-		if (A->val == B->val && subHelper(A, B)) {
+		if (A->val == B->val && subHelper(A, B))
 			return true;
-		}
 		return isSubStructure(A->left, B) || isSubStructure(A->right, B);
 	}
 

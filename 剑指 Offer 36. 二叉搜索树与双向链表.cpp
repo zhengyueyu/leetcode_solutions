@@ -24,17 +24,21 @@ public:
 class Solution {
 public:
     Node* treeToDoublyList(Node* root) {
-        if(root == nullptr) return root;
-        helper(root);
+        if(root == nullptr) return nullptr;
+        Node* head = nullptr;
+        Node* tail = nullptr;
+        helper(root, head, tail);
         tail->right = head;
         head->left = tail;
         return head;
     }
 
-    void helper(Node* root) {
+    void helper(Node* root, Node*& head, Node*& tail) {
         if(root == nullptr) return;
-        if(root->left) helper(root->left);
-        if(!tail) {
+        helper(root->left, head, tail);
+
+        //如果是头节点就更新头节点，如果不是的话就更新tail，这里是双指针的原理（循环中的root和tail构成双指针）
+        if(!head) {
             head = root;
         }
         else {
@@ -42,10 +46,8 @@ public:
             root->left = tail;
         }
         tail = root;
-        if(root->right) helper(root->right);
+        //
+        
+        helper(root->right, head, tail);
     }
-
-private:
-    Node* head = nullptr;
-    Node* tail = nullptr;
 };
