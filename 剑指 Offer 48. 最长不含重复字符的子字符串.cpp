@@ -1,16 +1,22 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        if(s.size() == 0 || s.size() == 1) return s.size();
-        vector<int> dp(s.size() + 1, 0);
-        vector<int> hash(128, -1);
+        if(s.empty()) return 0;
+        if(s.size() == 1) return 1;
+        vector<int> dp(128, -1);
+        int i = 0;
+        int j = 0;
         int maxlen = 0;
-        for(int i = 0; i < s.size(); i++) {
-            dp[i + 1] = hash[s[i]] < i - dp[i] ?
-                    dp[i] + 1 :
-                    i - hash[s[i]];
-            hash[s[i]] = i;
-            maxlen = max(maxlen, dp[i + 1]);
+        for(int k = 0; k < s.size(); k++) {
+            char ch = s[k];
+
+            //不仅ch要出现过，还要出现的位置在当前i~j的范围内
+            if(dp[ch] != -1 && dp[ch] >= i) {
+                i = dp[ch] + 1;
+            }
+            dp[ch] = k;
+            j = k;
+            maxlen = max(maxlen, j - i + 1);
         }
         return maxlen;
     }
