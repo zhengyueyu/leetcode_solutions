@@ -11,6 +11,7 @@
 #include <cmath>
 #include <bitset>
 #include <sstream>
+#include <memory>
 
 
 using namespace std;
